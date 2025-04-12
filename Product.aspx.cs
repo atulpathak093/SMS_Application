@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace SMS_Application
 {
+    // Added a comment for github testing 
     public partial class Product : System.Web.UI.Page
     {
         SqlConnection con = new SqlConnection("Data Source = DESKTOP-VOBAN0O\\SQLEXPRESS ;Initial Catalog = db_SMS ;Integrated Security = true");
