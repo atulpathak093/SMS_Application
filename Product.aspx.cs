@@ -9,7 +9,6 @@ using System.Web.UI.WebControls;
 
 namespace SMS_Application
 {
-    // Added a comment for github testing 
     public partial class Product : System.Web.UI.Page
     {
         SqlConnection con = new SqlConnection("Data Source = DESKTOP-VOBAN0O\\SQLEXPRESS ;Initial Catalog = db_SMS ;Integrated Security = true");
@@ -20,6 +19,7 @@ namespace SMS_Application
             {
                 BindQuantity();
                 BindCategory();
+                BindGrid();
             }
 
         }
@@ -75,6 +75,20 @@ namespace SMS_Application
             ddlDescription.DataBind();
             ddlDescription.Items.Insert(0, new ListItem("--Select--", "0"));
         }
+
+        public void BindGrid()
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("SpProduct", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Action", "ProductShow");
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            con.Close();
+            gvProduct.DataSource = dt;
+            gvProduct.DataBind();
+        }
        
         protected void btnSave_Click(object sender, EventArgs e)
         {
@@ -89,11 +103,27 @@ namespace SMS_Application
             cmd.Parameters.AddWithValue("@ProductDescription", ddlDescription.SelectedValue);
             cmd.ExecuteNonQuery();
             con.Close();
+            BindGrid();
         }
 
         protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindDescription();
+        }
+
+        protected void gvProduct_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if(e.CommandName == "Del")
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SpProduct", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Action", "ProductDelete");
+                cmd.Parameters.AddWithValue("@ProductId", e.CommandArgument);
+                cmd.ExecuteNonQuery();
+                con.Close();
+                BindGrid();
+            }
         }
     }
 }
