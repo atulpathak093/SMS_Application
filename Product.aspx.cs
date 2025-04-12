@@ -92,18 +92,48 @@ namespace SMS_Application
        
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            con.Open();
-            SqlCommand cmd = new SqlCommand("SpProduct", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Action", "ProductInsert");
-            cmd.Parameters.AddWithValue("@ProductName", txtProductName.Text);
-            cmd.Parameters.AddWithValue("@ProductQuantity", ddlQuantity.SelectedValue);
-            cmd.Parameters.AddWithValue("@ProductPrice", txtProductPrice.Text);
-            cmd.Parameters.AddWithValue("@ProductCategory", ddlCategory.SelectedValue);
-            cmd.Parameters.AddWithValue("@ProductDescription", ddlDescription.SelectedValue);
-            cmd.ExecuteNonQuery();
-            con.Close();
-            BindGrid();
+           if(btnSave.Text == "Submit")
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SpProduct", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Action", "ProductInsert");
+                cmd.Parameters.AddWithValue("@ProductName", txtProductName.Text);
+                cmd.Parameters.AddWithValue("@ProductQuantity", ddlQuantity.SelectedValue);
+                cmd.Parameters.AddWithValue("@ProductPrice", txtProductPrice.Text);
+                cmd.Parameters.AddWithValue("@ProductCategory", ddlCategory.SelectedValue);
+                cmd.Parameters.AddWithValue("@ProductDescription", ddlDescription.SelectedValue);
+                cmd.ExecuteNonQuery();
+                con.Close();
+                BindGrid();
+                Clear();
+            }
+           else if(btnSave.Text == "Update")
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SpProduct", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Action", "ProductUpdate");
+                cmd.Parameters.AddWithValue("@ProductId", ViewState["ProductId"]);
+                cmd.Parameters.AddWithValue("@ProductName", txtProductName.Text);
+                cmd.Parameters.AddWithValue("@ProductQuantity", ddlQuantity.SelectedValue);
+                cmd.Parameters.AddWithValue("@ProductPrice", txtProductPrice.Text);
+                cmd.Parameters.AddWithValue("@ProductCategory", ddlCategory.SelectedValue);
+                cmd.Parameters.AddWithValue("@ProductDescription", ddlDescription.SelectedValue);
+                cmd.ExecuteNonQuery();
+                con.Close();
+                BindGrid();
+                Clear();
+            }
+        }
+        public void Clear()
+        {
+            txtProductName.Text = "";
+            txtProductPrice.Text = "";
+            ddlCategory.SelectedValue = "0";
+            ddlDescription.SelectedValue = "0";
+            ddlQuantity.SelectedValue = "0";
+            btnSave.Text = "Submit";
         }
 
         protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -123,6 +153,26 @@ namespace SMS_Application
                 cmd.ExecuteNonQuery();
                 con.Close();
                 BindGrid();
+            }
+            else if(e.CommandName == "Upd")
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SpProduct", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Action", "ProductEdit");
+                cmd.Parameters.AddWithValue("@ProductId", e.CommandArgument);
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                con.Close();
+                txtProductName.Text = dt.Rows[0]["ProductName"].ToString();
+                txtProductPrice.Text = dt.Rows[0]["ProductPrice"].ToString();
+                ddlQuantity.SelectedValue = dt.Rows[0]["ProductQuantity"].ToString();
+                ddlCategory.SelectedValue = dt.Rows[0]["ProductCategory"].ToString();
+                BindDescription();
+                ddlDescription.SelectedValue = dt.Rows[0]["ProductDescription"].ToString();
+                ViewState["ProductId"] = e.CommandArgument;
+                btnSave.Text = "Update";
             }
         }
     }

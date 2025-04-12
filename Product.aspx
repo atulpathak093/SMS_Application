@@ -32,6 +32,7 @@
                     <asp:DropDownList ID="ddlDescription" runat="server"></asp:DropDownList></td>
             </tr>
             <tr>
+                <td></td>
                 <td>
                     <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" /></td>
             </tr>
