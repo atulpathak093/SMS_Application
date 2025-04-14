@@ -30,6 +30,7 @@ namespace SMS_Application
             DataTable dt = new DataTable();
             sda.Fill(dt);
             con.Close();
+            Session["PersonEmail"] = txtLogInEmail.Text;
             if(dt.Rows.Count > 0)
             {
                 Response.Redirect("Home.aspx");
@@ -48,6 +49,11 @@ namespace SMS_Application
                 Response.Redirect("ForgetPassword.aspx");
             }
             
+        }
+
+        protected void GoOnRegister_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("PersonRegistrationForm.aspx");
         }
     }
 }

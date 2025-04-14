@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Default.Master" AutoEventWireup="true" CodeBehind="Product.aspx.cs" Inherits="SMS_Application.Product" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -34,8 +35,16 @@
             <tr>
                 <td></td>
                 <td>
-                    <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" /></td>
+                    <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click"/>
+
+                </td>
             </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="lbl" runat="server"></asp:Label>
+                </td>
+            </tr>
+
             <tr>
                 <td></td>
                 <td>

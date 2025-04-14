@@ -30,7 +30,7 @@
                         <div id="menu">
                             <ul class="menu">                           
                                 <li><a href="Home.aspx"><span>Home</span></a></li>
-                                <li class="last"><a href="#"><span>Add Item</span></a></li>
+                                <li class="last"><a href="Product.aspx"><span>Add Item</span></a></li>
                             </ul>
                         </div>
 

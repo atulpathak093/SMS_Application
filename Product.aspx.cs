@@ -84,16 +84,18 @@ namespace SMS_Application
             cmd.Parameters.AddWithValue("@Action", "ProductShow");
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
-            sda.Fill(dt);
+            sda.Fill(dt);           
             con.Close();
             gvProduct.DataSource = dt;
             gvProduct.DataBind();
+            
         }
-       
+
         protected void btnSave_Click(object sender, EventArgs e)
         {
-           if(btnSave.Text == "Submit")
-            {
+           if(btnSave.Text == "Save")
+           {
+                //for insert data in tblProduct table
                 con.Open();
                 SqlCommand cmd = new SqlCommand("SpProduct", con);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -104,11 +106,28 @@ namespace SMS_Application
                 cmd.Parameters.AddWithValue("@ProductCategory", ddlCategory.SelectedValue);
                 cmd.Parameters.AddWithValue("@ProductDescription", ddlDescription.SelectedValue);
                 cmd.ExecuteNonQuery();
+
+                //for Retrieving the ProductId from tblProduct table 
+                SqlCommand dmd = new SqlCommand("SpProduct", con);
+                dmd.CommandType = CommandType.StoredProcedure;
+                dmd.Parameters.AddWithValue("@Action", "GetProductId");
+                SqlDataAdapter sda = new SqlDataAdapter(dmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                int productId = Convert.ToInt32(dt.Rows[0]["ProductId"]);
+
+                //for insert data into tblEvent table 
+                SqlCommand bmd = new SqlCommand("SpEvent", con);
+                bmd.CommandType = CommandType.StoredProcedure;
+                bmd.Parameters.AddWithValue("@Action", "AddEvent");
+                bmd.Parameters.AddWithValue("@ProductId", productId);
+                bmd.Parameters.AddWithValue("@PersonEmail", Session["PersonEmail"]);
+                bmd.ExecuteNonQuery();
                 con.Close();
                 BindGrid();
                 Clear();
             }
-           else if(btnSave.Text == "Update")
+            else if(btnSave.Text == "Update")
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("SpProduct", con);
@@ -133,7 +152,7 @@ namespace SMS_Application
             ddlCategory.SelectedValue = "0";
             ddlDescription.SelectedValue = "0";
             ddlQuantity.SelectedValue = "0";
-            btnSave.Text = "Submit";
+            btnSave.Text = "Save";
         }
 
         protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -150,9 +169,19 @@ namespace SMS_Application
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Action", "ProductDelete");
                 cmd.Parameters.AddWithValue("@ProductId", e.CommandArgument);
-                cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();     
+                
+
+                SqlCommand dmd = new SqlCommand("SpEvent", con);
+                dmd.CommandType = CommandType.StoredProcedure;
+                dmd.Parameters.AddWithValue("@Action", "DeleteEvent");
+                dmd.Parameters.AddWithValue("@ProductId", e.CommandArgument);
+                dmd.Parameters.AddWithValue("@PersonEmail", Session["PersonEmail"]);
+                dmd.ExecuteNonQuery();
                 con.Close();
                 BindGrid();
+                Response.Redirect("ShowEventActivity.aspx");
+
             }
             else if(e.CommandName == "Upd")
             {
