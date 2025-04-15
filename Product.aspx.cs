@@ -140,9 +140,19 @@ namespace SMS_Application
                 cmd.Parameters.AddWithValue("@ProductCategory", ddlCategory.SelectedValue);
                 cmd.Parameters.AddWithValue("@ProductDescription", ddlDescription.SelectedValue);
                 cmd.ExecuteNonQuery();
+
+                //for insert into tblEvent for acknowledge who is updating the Product
+                SqlCommand dmd = new SqlCommand("SpEvent", con);
+                dmd.CommandType = CommandType.StoredProcedure;
+                dmd.Parameters.AddWithValue("@Action", "UpdateEvent");
+                dmd.Parameters.AddWithValue("@ProductId", ViewState["ProductId"]);
+                dmd.Parameters.AddWithValue("@PersonEmail", Session["PersonEmail"]);
+                dmd.ExecuteNonQuery();
                 con.Close();
                 BindGrid();
                 Clear();
+                Response.Redirect("ShowEventActivity.aspx");
+
             }
         }
         public void Clear()
@@ -172,6 +182,7 @@ namespace SMS_Application
                 cmd.ExecuteNonQuery();     
                 
 
+                //for insert into tblEvent for acknowledge who deleted the data
                 SqlCommand dmd = new SqlCommand("SpEvent", con);
                 dmd.CommandType = CommandType.StoredProcedure;
                 dmd.Parameters.AddWithValue("@Action", "DeleteEvent");
