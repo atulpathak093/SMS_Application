@@ -17,29 +17,11 @@ namespace SMS_Application
         {
             if (!IsPostBack)
             {
-                BindQuantity();
                 BindCategory();
                 BindGrid();
             }
 
-        }
-        public void BindQuantity()
-        {
-            con.Open();
-            SqlCommand cmd = new SqlCommand("SpProduct", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Action", "GetQuantity");
-            SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            con.Close();
-            ddlQuantity.DataValueField = "QuantityId";
-            ddlQuantity.DataTextField = "QuantityName";
-            ddlQuantity.DataSource = dt;
-            ddlQuantity.DataBind();
-            ddlQuantity.Items.Insert(0, new ListItem("--Select--", "0"));
-        }
-
+        }     
         public void BindCategory()
         {
             con.Open();
@@ -101,7 +83,7 @@ namespace SMS_Application
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Action", "ProductInsert");
                 cmd.Parameters.AddWithValue("@ProductName", txtProductName.Text);
-                cmd.Parameters.AddWithValue("@ProductQuantity", ddlQuantity.SelectedValue);
+                cmd.Parameters.AddWithValue("@ProductQuantity", txtProductQuantity.Text);
                 cmd.Parameters.AddWithValue("@ProductPrice", txtProductPrice.Text);
                 cmd.Parameters.AddWithValue("@ProductCategory", ddlCategory.SelectedValue);
                 cmd.Parameters.AddWithValue("@ProductDescription", ddlDescription.SelectedValue);
@@ -135,7 +117,7 @@ namespace SMS_Application
                 cmd.Parameters.AddWithValue("@Action", "ProductUpdate");
                 cmd.Parameters.AddWithValue("@ProductId", ViewState["ProductId"]);
                 cmd.Parameters.AddWithValue("@ProductName", txtProductName.Text);
-                cmd.Parameters.AddWithValue("@ProductQuantity", ddlQuantity.SelectedValue);
+                cmd.Parameters.AddWithValue("@ProductQuantity", txtProductQuantity.Text);
                 cmd.Parameters.AddWithValue("@ProductPrice", txtProductPrice.Text);
                 cmd.Parameters.AddWithValue("@ProductCategory", ddlCategory.SelectedValue);
                 cmd.Parameters.AddWithValue("@ProductDescription", ddlDescription.SelectedValue);
@@ -161,7 +143,7 @@ namespace SMS_Application
             txtProductPrice.Text = "";
             ddlCategory.SelectedValue = "0";
             ddlDescription.SelectedValue = "0";
-            ddlQuantity.SelectedValue = "0";
+            txtProductQuantity.Text = "";
             btnSave.Text = "Save";
         }
 
@@ -207,7 +189,7 @@ namespace SMS_Application
                 con.Close();
                 txtProductName.Text = dt.Rows[0]["ProductName"].ToString();
                 txtProductPrice.Text = dt.Rows[0]["ProductPrice"].ToString();
-                ddlQuantity.SelectedValue = dt.Rows[0]["ProductQuantity"].ToString();
+                txtProductQuantity.Text = dt.Rows[0]["ProductQuantity"].ToString();
                 ddlCategory.SelectedValue = dt.Rows[0]["ProductCategory"].ToString();
                 BindDescription();
                 ddlDescription.SelectedValue = dt.Rows[0]["ProductDescription"].ToString();

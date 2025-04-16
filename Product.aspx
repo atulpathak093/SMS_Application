@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <center>
-        <table>
+        <table style="border:groove">
             <tr>
                 <td>Product Name</td>
                 <td>
@@ -13,8 +13,7 @@
             </tr>
             <tr>
                 <td>Product Quantity</td>
-                <td>
-                    <asp:DropDownList ID="ddlQuantity" runat="server"></asp:DropDownList></td>
+                <td><asp:TextBox ID="txtProductQuantity" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
                 <td>Product Price/Unit</td>
@@ -62,7 +61,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Product Quantity">
                                 <ItemTemplate>
-                                    <%#Eval("QuantityName") %>
+                                    <%#Eval("ProductQuantity") %>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Product Price/Unit">

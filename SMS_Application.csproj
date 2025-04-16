@@ -67,6 +67,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddCustomer.aspx" />
+    <Content Include="AddProductInCart.aspx" />
+    <Content Include="BillingInProgress.aspx" />
     <Content Include="Footer.ascx" />
     <Content Include="ForgetPassword.aspx" />
     <Content Include="Header.ascx" />
@@ -88,6 +91,27 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddCustomer.aspx.cs">
+      <DependentUpon>AddCustomer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddCustomer.aspx.designer.cs">
+      <DependentUpon>AddCustomer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddProductInCart.aspx.cs">
+      <DependentUpon>AddProductInCart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddProductInCart.aspx.designer.cs">
+      <DependentUpon>AddProductInCart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BillingInProgress.aspx.cs">
+      <DependentUpon>BillingInProgress.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BillingInProgress.aspx.designer.cs">
+      <DependentUpon>BillingInProgress.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.Master.cs">
       <DependentUpon>Default.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
