@@ -15,20 +15,27 @@ namespace SMS_Application
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if(!IsPostBack)
+            {
+                txtCustomerMobile.Text = Session["CustomerMobile"].ToString();
+                lbl.Text = "Customer not found please add customer details";
+            }
         }
 
         protected void btnAddCustomer_Click(object sender, EventArgs e)
         {
-            con.Open();
-            SqlCommand cmd = new SqlCommand("SpCustomer", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Action", "CustomerInsert");
-            cmd.Parameters.AddWithValue("@CustomerName", txtCustomerName.Text);
-            cmd.Parameters.AddWithValue("@CustomerMobile", txtCustomerMobile.Text);
-            cmd.ExecuteNonQuery();
-            con.Close();
-            Response.Redirect("AddProductInCart.aspx");
+           if(txtCustomerName.Text != "" && txtCustomerMobile.Text!= "")
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SpCustomer", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Action", "CustomerInsert");
+                cmd.Parameters.AddWithValue("@CustomerName", txtCustomerName.Text);
+                cmd.Parameters.AddWithValue("@CustomerMobile", txtCustomerMobile.Text);
+                cmd.ExecuteNonQuery();
+                con.Close();
+                Response.Redirect("AddProductInCart.aspx");
+            }
         }
     }
 }

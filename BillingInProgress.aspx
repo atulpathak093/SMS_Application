@@ -25,7 +25,7 @@
                     <tr>
                         <td></td>
                         <td>
-                            <asp:Button ID="btnCustomerDetails" runat="server" OnClick="btnCustomerDetails_Click" /></td>
+                            <asp:Button ID="btnCustomerDetails" runat="server" Text="GetCustomerDetails" OnClick="btnCustomerDetails_Click" /></td>
                         <td>
                             <asp:Label ID="lbl" runat="server"></asp:Label></td>
                     </tr>

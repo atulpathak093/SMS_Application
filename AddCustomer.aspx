@@ -19,7 +19,8 @@
                     <tr>
                         <td>Customer Mobile</td>
                         <td>
-                            <asp:TextBox ID="txtCustomerMobile" runat="server"></asp:TextBox></td>
+                            <%--readonly="true" Enabled="false"--%>
+                            <asp:TextBox ID="txtCustomerMobile" runat="server" ></asp:TextBox></td>
                     </tr>
                     <tr>
                         <td></td>
