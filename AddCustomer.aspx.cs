@@ -15,10 +15,17 @@ namespace SMS_Application
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
-                txtCustomerMobile.Text = Session["CustomerMobile"].ToString();
-                lbl.Text = "Customer not found please add customer details";
+                if (Session["CustomerMobile"] != null)
+                {
+                    txtCustomerMobile.Text = Session["CustomerMobile"].ToString();
+                    lbl.Text = "Customer not found. Please add customer details.";
+                }
+                else
+                {
+                    lbl.Text = "Session expired or mobile number not available.";
+                }
             }
         }
 

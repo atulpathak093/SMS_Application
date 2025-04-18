@@ -26,19 +26,20 @@
                     <tr>
                         <td>Product Description</td>
                         <td>
-                            <asp:DropDownList ID="ddlDescription" runat="server"></asp:DropDownList></td>
+                            <asp:DropDownList ID="ddlDescription" runat="server" AutoPostBack="true" OnSelectedIndexChanged ="ddlDescription_SelectedIndexChanged"></asp:DropDownList></td>
                     </tr>
+
 
                     <tr>
                         <td>Product Name</td>
                         <td>
-                            <asp:TextBox ID="txtProductName" runat="server"></asp:TextBox></td>
+                            <asp:TextBox ID="txtProductName" ReadOnly="true" Enabled="false" runat="server"></asp:TextBox></td>
                     </tr>
 
                     <tr>
                         <td>Available Quantity</td>
                         <td>
-                            <asp:TextBox ID="txtAvailableQuantity" runat="server"></asp:TextBox></td>
+                            <asp:TextBox ID="txtAvailableQuantity" ReadOnly="true" Enabled="false" runat="server"></asp:TextBox></td>
                     </tr>
                     <tr>
                         <td>Purchase Quantity</td>
@@ -48,7 +49,7 @@
                     <tr>
                         <td></td>
                         <td>
-                            <asp:Button ID="btnAddItem" runat="server" Text="Add Item" />
+                            <asp:Button ID="btnAddItem" runat="server" Text="Add Item" OnClick="btnAddItem_Click" />
                             <asp:Button ID="btnForBilling" runat="server" Text="Go To Billing" OnClick="btnForBilling_Click" />
                         </td>
                     </tr>
