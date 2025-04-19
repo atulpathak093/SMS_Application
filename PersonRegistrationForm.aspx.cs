@@ -27,18 +27,38 @@ namespace SMS_Application
                 if (txtPersonName.Text != "" && txtPersonEmail.Text != "" && txtConfirmPassword.Text != "" && txtPersonpassword.Text != "" && txtPersonMobile.Text != "" && ddlRole.SelectedValue != "0")
                 {
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("SpPerson", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Action", "PersonInsert");
-                    cmd.Parameters.AddWithValue("@PersonName", txtPersonName.Text);
-                    cmd.Parameters.AddWithValue("@PersonEmail", txtPersonEmail.Text);
-                    cmd.Parameters.AddWithValue("@PersonPassword", txtPersonpassword.Text);
-                    cmd.Parameters.AddWithValue("@PersonMobile", txtPersonMobile.Text);
-                    cmd.Parameters.AddWithValue("@PersonRole", ddlRole.SelectedValue);
-                    cmd.ExecuteNonQuery();
+                    SqlCommand dmd = new SqlCommand("SpPerson", con);
+                    dmd.CommandType = CommandType.StoredProcedure;
+                    dmd.Parameters.AddWithValue("@Action", "AlreadyPerson");
+                    dmd.Parameters.AddWithValue("@PersonEmail", txtPersonEmail.Text);
+                    dmd.Parameters.AddWithValue("@PersonMobile", txtPersonMobile.Text);
+                    SqlDataAdapter sda = new SqlDataAdapter(dmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    //con.Close();
+                    if (dt.Rows.Count>0)
+                    {
+                        lbl.Text = "Person Already exist";
+                    }
+
+                    else
+                    {
+                        //con.Open();
+                        SqlCommand cmd = new SqlCommand("SpPerson", con);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@Action", "PersonInsert");
+                        cmd.Parameters.AddWithValue("@PersonName", txtPersonName.Text);
+                        cmd.Parameters.AddWithValue("@PersonEmail", txtPersonEmail.Text);
+                        cmd.Parameters.AddWithValue("@PersonPassword", txtPersonpassword.Text);
+                        cmd.Parameters.AddWithValue("@PersonMobile", txtPersonMobile.Text);
+                        cmd.Parameters.AddWithValue("@PersonRole", ddlRole.SelectedValue);
+                        cmd.ExecuteNonQuery();
+                        Clear();
+                        Response.Redirect("SignIn.aspx");
+                    }
                     con.Close();
-                    Clear();
-                    Response.Redirect("SignIn.aspx");
+
+
                 }
                 else
                 {
@@ -82,6 +102,7 @@ namespace SMS_Application
             txtPersonName.Text = "";
             txtPersonpassword.Text = "";
             ddlRole.SelectedValue = "0";
+            lbl.Text = "";
 
         }
     }
