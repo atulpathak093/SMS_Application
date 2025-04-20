@@ -11,8 +11,17 @@ namespace SMS_Application
 {
 
 
-    public partial class BillingInProgress
+    public partial class Site1
     {
+
+        /// <summary>
+        /// head control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
 
         /// <summary>
         /// form1 control.
@@ -24,48 +33,30 @@ namespace SMS_Application
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// txtCustomerMobile control.
+        /// h1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCustomerMobile;
+        protected global::SMS_Application.Header h1;
 
         /// <summary>
-        /// txtCustomerName control.
+        /// ContentPlaceHolder1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCustomerName;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
 
         /// <summary>
-        /// btnCustomerDetails control.
+        /// f1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCustomerDetails;
-
-        /// <summary>
-        /// btnProceed control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnProceed;
-
-        /// <summary>
-        /// lbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl;
+        protected global::SMS_Application.Footer f1;
     }
 }

@@ -19,7 +19,7 @@ namespace SMS_Application
 
         protected void btnCustomerDetails_Click(object sender, EventArgs e)
         {
-            if(txtCustomerMobile.Text != "")
+            if (txtCustomerMobile.Text != "")
             {
                 Session["CustomerMobile"] = txtCustomerMobile.Text;
 
@@ -34,16 +34,7 @@ namespace SMS_Application
                 con.Close();
                 if (dt.Rows.Count > 0)
                 {
-                    txtCustomerName.Text = dt.Rows[0]["CustomerName"].ToString();
-                    if (txtCustomerName.Text != "")
-                    {
-                        Response.Redirect("AddProductInCart.aspx");
-                    }
-                    else
-                    {
-                        Response.Redirect("AddCustomer.aspx");
-                    }
-
+                    txtCustomerName.Text = dt.Rows[0]["CustomerName"].ToString();                   
                 }
                 else
                 {
@@ -55,6 +46,19 @@ namespace SMS_Application
             {
                 lbl.Text = "Please Enter Mobile Number";
             }
+        }
+
+        protected void btnProceed_Click(object sender, EventArgs e)
+        {
+            if (txtCustomerName.Text != "")
+            {
+                Response.Redirect("AddProductInCart.aspx");
+            }
+            else
+            {
+                Response.Redirect("AddCustomer.aspx");
+            }
+
         }
     }
 }

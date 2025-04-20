@@ -88,30 +88,39 @@ namespace SMS_Application
         {
 
             //Getting CustomerId from Procedure SpCustomer
-
+            String l_CustomerId = "";
             con.Open();
             SqlCommand dmd = new SqlCommand("SpCustomer", con);
             dmd.CommandType = CommandType.StoredProcedure;
             dmd.Parameters.AddWithValue("@Action", "GetCustomer");
+            dmd.Parameters.AddWithValue("@CustomerMobile", Session["CustomerMobile"]);
             SqlDataAdapter sda = new SqlDataAdapter(dmd);
             DataTable dt = new DataTable();
             sda.Fill(dt);
-            ViewState["CustomerId"] = dt.Rows[0]["CustomerId"].ToString();
+            if(dt.Rows.Count > 0)
+            {
+                l_CustomerId = dt.Rows[0]["CustomerId"].ToString();
+            }
+            else
+            {
+                lbl.Text = "there is no record in customer table";
+            }
 
-
+            String l_ProductId = "";
 
             //Getting ProductId from procedure SpProduct 
 
             SqlCommand bmd = new SqlCommand("SpProduct", con);
             bmd.CommandType = CommandType.StoredProcedure;
             bmd.Parameters.AddWithValue("@Action", "GetProductId");
+            bmd.Parameters.AddWithValue("@ProductName", txtProductName.Text.Trim());
             SqlDataAdapter da = new SqlDataAdapter(bmd);
             DataTable bt = new DataTable();
             da.Fill(bt);
 
-            if (bt.Rows.Count > 0 && bt.Columns.Contains("ProductId"))
+            if (bt.Rows.Count > 0)
             {
-                ViewState["ProductId"] = bt.Rows[0]["ProductId"].ToString();
+                l_ProductId = bt.Rows[0]["ProductId"].ToString();
             }
             else
             {
@@ -121,13 +130,21 @@ namespace SMS_Application
 
             //Insert record into tblCart 
 
+//           try
+//{
             SqlCommand cmd = new SqlCommand("SpCart", con);
-            cmd.CommandType= CommandType.StoredProcedure;
+            cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Action", "CartInsert");
-            cmd.Parameters.AddWithValue("@CustomerId", ViewState["CustomerId"]);
-            cmd.Parameters.AddWithValue("@ProductId", ViewState["ProductId"]);
+            cmd.Parameters.AddWithValue("@CustomerId", l_CustomerId);
+            cmd.Parameters.AddWithValue("@ProductId", l_ProductId);
             cmd.Parameters.AddWithValue("@PurchaseQuantity", txtPurchaseQuantity.Text);
             cmd.ExecuteNonQuery();
+//    lbl.Text += "<br/>Item added successfully.";
+//}
+//catch (Exception ex)
+//{
+//    lbl.Text += "<br/>Error: " + ex.Message;
+//}
             con.Close();
         }
     }
