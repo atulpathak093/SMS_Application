@@ -16,6 +16,8 @@ namespace SMS_Application
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            BindGrid();
+
             if (!IsPostBack)
             {
                 BindCategory();
@@ -63,7 +65,49 @@ namespace SMS_Application
 
         protected void btnForBilling_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Billing.aspx");
+            Response.Redirect("Payment.aspx");
+        }
+        public void BindGrid()
+        {
+
+            con.Open();
+            SqlCommand dmd = new SqlCommand("SpCustomer", con);
+            dmd.CommandType = CommandType.StoredProcedure;
+            dmd.Parameters.AddWithValue("@Action", "GetCustomer");
+            dmd.Parameters.AddWithValue("@CustomerMobile", Session["CustomerMobile"]);
+            SqlDataAdapter sda1 = new SqlDataAdapter(dmd);
+            DataTable dt1 = new DataTable();
+            sda1.Fill(dt1);
+            if (dt1.Rows.Count > 0)
+            {
+                ViewState["CustomerId"] = dt1.Rows[0]["CustomerId"].ToString();
+            }
+            else
+            {
+                lbl.Text = "there is no record in customer table";
+            }
+
+            SqlCommand cmd = new SqlCommand("SpCart", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Action", "GetCartData");
+            cmd.Parameters.AddWithValue("@CustomerId", ViewState["CustomerId"]);
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            sda.Fill(ds);
+            con.Close();
+            gvBilling.DataSource = ds.Tables[0];
+            gvBilling.DataBind();
+
+            if (ds.Tables.Count > 1 && ds.Tables[1].Rows.Count > 0)
+            {
+                String l_GrandTotal = ds.Tables[1].Rows[0]["GrandTotal"].ToString();
+                if (l_GrandTotal != null)
+                {
+                    lbl.Text = "Total Amount: ₹" + l_GrandTotal;
+                    Session["TotalAmount"] = l_GrandTotal;
+                }
+                
+            }
         }
 
         protected void ddlDescription_SelectedIndexChanged(object sender, EventArgs e)
@@ -87,25 +131,10 @@ namespace SMS_Application
         protected void btnAddItem_Click(object sender, EventArgs e)
         {
 
-            //Getting CustomerId from Procedure SpCustomer
-            String l_CustomerId = "";
-            con.Open();
-            SqlCommand dmd = new SqlCommand("SpCustomer", con);
-            dmd.CommandType = CommandType.StoredProcedure;
-            dmd.Parameters.AddWithValue("@Action", "GetCustomer");
-            dmd.Parameters.AddWithValue("@CustomerMobile", Session["CustomerMobile"]);
-            SqlDataAdapter sda = new SqlDataAdapter(dmd);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            if(dt.Rows.Count > 0)
-            {
-                l_CustomerId = dt.Rows[0]["CustomerId"].ToString();
-            }
-            else
-            {
-                lbl.Text = "there is no record in customer table";
-            }
 
+            //Getting CustomerId from Procedure SpCustomer
+
+            con.Open();
             String l_ProductId = "";
 
             //Getting ProductId from procedure SpProduct 
@@ -130,22 +159,24 @@ namespace SMS_Application
 
             //Insert record into tblCart 
 
-//           try
-//{
             SqlCommand cmd = new SqlCommand("SpCart", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Action", "CartInsert");
-            cmd.Parameters.AddWithValue("@CustomerId", l_CustomerId);
+            cmd.Parameters.AddWithValue("@CustomerId", ViewState["CustomerId"]);
             cmd.Parameters.AddWithValue("@ProductId", l_ProductId);
             cmd.Parameters.AddWithValue("@PurchaseQuantity", txtPurchaseQuantity.Text);
-            cmd.ExecuteNonQuery();
-//    lbl.Text += "<br/>Item added successfully.";
-//}
-//catch (Exception ex)
-//{
-//    lbl.Text += "<br/>Error: " + ex.Message;
-//}
-            con.Close();
+            int i = cmd.ExecuteNonQuery();
+            if (i > 0)
+            {
+                lbl.Text += "<br/>Item added successfully.";
+            }
+            else
+            {
+                lbl.Text = "unable to insert item in cart";
+            }
+
+                con.Close();
+            BindGrid();
         }
     }
 }

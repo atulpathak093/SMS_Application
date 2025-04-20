@@ -1,0 +1,32 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Payment.aspx.cs" Inherits="SMS_Application.Payment" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <center>
+                <table>
+                    <tr>
+                        <td>Total Amount</td>
+                        <td><asp:TextBox ID="txtAmount" runat="server"></asp:TextBox></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><asp:Button  ID="btnAmount" runat="server" Text="Pay" OnClick="btnAmount_Click"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label ID="lbl" runat="server"></asp:Label>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </div>
+    </form>
+</body>
+</html>

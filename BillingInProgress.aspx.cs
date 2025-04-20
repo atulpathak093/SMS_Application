@@ -34,7 +34,9 @@ namespace SMS_Application
                 con.Close();
                 if (dt.Rows.Count > 0)
                 {
-                    txtCustomerName.Text = dt.Rows[0]["CustomerName"].ToString();                   
+                    txtCustomerName.Text = dt.Rows[0]["CustomerName"].ToString();
+                    Session["CustomerId"] = dt.Rows[0]["CustomerId"].ToString();
+
                 }
                 else
                 {

@@ -24,15 +24,6 @@ namespace SMS_Application
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// lbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl;
-
-        /// <summary>
         /// ddlCategory control.
         /// </summary>
         /// <remarks>
@@ -78,6 +69,15 @@ namespace SMS_Application
         protected global::System.Web.UI.WebControls.TextBox txtPurchaseQuantity;
 
         /// <summary>
+        /// lbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl;
+
+        /// <summary>
         /// btnAddItem control.
         /// </summary>
         /// <remarks>
@@ -94,5 +94,14 @@ namespace SMS_Application
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnForBilling;
+
+        /// <summary>
+        /// gvBilling control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvBilling;
     }
 }
