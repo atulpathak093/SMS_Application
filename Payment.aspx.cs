@@ -28,7 +28,7 @@ namespace SMS_Application
             cmd.ExecuteNonQuery();
             con.Close();
             lbl.Text = "Your Payment Has been completed successfully";
-            Response.Redirect("BillingInProgress.aspx");
+            //Response.Redirect("BillingInProgress.aspx");
         }
     }
 }

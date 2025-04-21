@@ -24,11 +24,19 @@ namespace SMS_Application
             DataTable dt = new DataTable();
             sda.Fill(dt);
             con.Close();
-            string fullMobile = dt.Rows[0]["PersonMobile"].ToString();
-            ViewState["Mobile"] = fullMobile;
-            string maskedMobile = fullMobile.Length > 4
-            ? new string('*', fullMobile.Length - 4) + fullMobile.Substring(fullMobile.Length - 4) : fullMobile;
-            lblMobile.Text = maskedMobile;
+            if(dt.Rows.Count > 0 )
+            {
+                string fullMobile = dt.Rows[0]["PersonMobile"].ToString();
+                ViewState["Mobile"] = fullMobile;
+                string maskedMobile = fullMobile.Length > 4
+                ? new string('*', fullMobile.Length - 4) + fullMobile.Substring(fullMobile.Length - 4) : fullMobile;
+                lblMobile.Text = maskedMobile;
+            }
+            else
+            {
+                lblMsg.Text = "User Name Doesn't Exist";
+            }
+           
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -45,6 +53,7 @@ namespace SMS_Application
                     cmd.ExecuteNonQuery();
                     con.Close();
                     lblMsg.Text = "Password has been changed successfully";
+                    Response.Redirect("SignIn.aspx");
                 }
                 else
                 {

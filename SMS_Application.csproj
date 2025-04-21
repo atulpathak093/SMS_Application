@@ -74,6 +74,7 @@
     <Content Include="ForgetPassword.aspx" />
     <Content Include="Header.ascx" />
     <Content Include="Home.aspx" />
+    <Content Include="images\logo.png" />
     <Content Include="images\item-pointer-mover.gif" />
     <Content Include="images\item-pointer.gif" />
     <Content Include="images\lava.gif" />
